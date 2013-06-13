@@ -1,5 +1,7 @@
 # mustache.scala
 
+started porting this project to use `scala 2.10`
+
 `mustache.scala` is an implementation of
 [mustache](http://mustache.github.com/) for Scala. It does not at
 present support custom delimiters.
@@ -42,20 +44,8 @@ of the default `Dictionary` implementation.
 # development
 
 `mustache.scala` uses [ANTLR](http://www.antlr.org/) for parsing. This
-requires source files to be generated. Thus, the slightly modified
-`sbt` routine is necessary:
+requires source files to be generated. (now uses maven with antlr3 plugin)
 
-    $ sbt update
-    $ sbt compile-antlr
+# maven / sbt (Not published yet, clone and build it yourself for now.)
 
-This only needs to be run initially, and whenever the grammar has
-changed (`src/main/antlr/Mustache.g`).
-
-# maven / sbt
-
-`mustache.scala` is published to the maven repo at
-`http://monkey.org/~marius/maven`.  To use with sbt, add the following
-lines:
-
-    val monkeyRepo = "monkey.org" at "http://monkey.org/~marius/maven"
-    val mustache = "org.monkey" % "mustache" % "1.0.3"
+    val mustache = "org.monkey" % "mustache" % "1.0.5-SNAPSHOT"
