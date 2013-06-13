@@ -6,5 +6,7 @@ project/plugins/project/
 project/plugins/src_managed/
 *.log
 *.tmproj
+*.iml
+.idea/
 lib_managed/
 .ensime

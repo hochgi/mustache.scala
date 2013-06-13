@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.monkey</groupId>
+    <artifactId>mustache_2.10</artifactId>
+    <version>1.0.5-SNAPSHOT</version>
+    <name>mustache_2.10</name>
+    <packaging>jar</packaging>
+    
+    <properties>
+        <scala.version>2.10</scala.version>
+    </properties>
+    
+    <repositories>
+        <repository>
+            <id>cm-nexus</id>
+            <name>CM-WELL Maven Repository</name>
+            <url>http://builder:8081/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>plugins.releases</id>
+            <name>Plugins Releases</name>
+            <url>http://builder:8081/nexus/content/groups/Plugins-Repositories-Releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+			<id>sonatype-releases-repository</id>
+            <name>Sonatype Releases Repository</name>
+            <url>http://builder.clearforest.com:8081/nexus/content/repositories/Sonatype-Releases-Repository/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.scala-tools.testing</groupId>
+            <artifactId>specs_${scala.version}</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+        <dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>3.5</version>
+		</dependency>
+		
+    </dependencies>
+    
+    <build>
+        <!--sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory-->
+        
+        <pluginManagement>
+            <plugins>
+				
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>3.1.3</version>
+                </plugin>
+                
+            	<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>antlr3-maven-plugin</artifactId>
+					<version>1.0</version>
+				</plugin>            
+				
+            </plugins>
+        </pluginManagement>
+        
+        <plugins>      
+          
+			<!--plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-antlr-files</id>
+						<phase>pre-compilation</phase>
+						<configuration>
+							<tasks>
+								<exec dir="${basedir}/src/main/antlr" executable="java" spawn="false">
+									<arg value="-jar"/>
+									<arg value="${basedir}/lib_build/antlr-3.3-complete.jar"/>
+									<arg value="-o"/>
+									<arg value="${basedir}/src/main/java/org/monkey/mustache"/>
+									<arg value="${basedir}/src/main/antlr/Mustache.g"/>
+								</exec>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>*process-resources*</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin-->
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>antlr3-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<grammars>*.g</grammars>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>antlr</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<includes>
+						<include>src/main/java/**/*.java</include>
+						<include>src/test/java/**/*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+			
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>thirdparty-releases</id>
+            <name>Thirdparty Release Repository</name>
+            <url>http://builder.clearforest.com:8081/nexus/content/repositories/thirdparty-releases</url>
+        </snapshotRepository>
+        <repository>
+            <id>thirdparty-releases</id>
+            <name>Thirdparty Release Repository</name>
+            <url>http://builder.clearforest.com:8081/nexus/content/repositories/thirdparty-releases</url>
+        </repository>
+    </distributionManagement>
+
+</project>
